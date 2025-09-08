@@ -39,7 +39,7 @@ module "autoscaling" {
   version = "9.0.1"
   # insert the 1 required variable here
 
-  name = "${var.environment.netwrok_prefix}-blog"
+  name = "${var.environment.name}-blog"
   min_size = var.asg_min_size
   max_size = var.asg_max_size
 
@@ -59,7 +59,7 @@ resource "aws_autoscaling_attachment" "asg_attachment" {
 module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.3.0"
-  name = "${var.environment.netwrok_prefix}-blog-sg"
+  name = "${var.environment.name}-blog-sg"
 
   vpc_id = module.blog_vpc.vpc_id
 
@@ -74,7 +74,7 @@ module "blog_alb" {
   source = "terraform-aws-modules/alb/aws"
   version = "~> 6.0"
 
-  name    = "${var.environment.netwrok_prefix}-blog-alb"
+  name    = "${var.environment.name}-blog-alb"
   vpc_id  = module.blog_vpc.vpc_id
   subnets = module.blog_vpc.public_subnets
   security_groups = [module.blog_sg.security_group_id]
